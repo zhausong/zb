@@ -27,6 +27,16 @@ func GroupId(groupName string) string {
 	return emptyStr
 }
 
+func GroupName(gid string) string {
+	for _, g := range Groups() {
+		if g.GroupId == gid {
+			return g.Name
+		}
+	}
+
+	return emptyStr
+}
+
 func HostsOfGroup(groupName string) zabbix.Hosts {
 	hostGroups := zabbix.HostGroups{zabbix.HostGroup{GroupId: GroupId(groupName)}}
 	hosts, err := api.HostsGetByHostGroups(hostGroups)
@@ -76,11 +86,13 @@ func ItemHistory(id string, limit int) []historyData {
 	must(err)
 	d := data.Result.([]interface{})
 	r := make([]historyData, len(d))
+	j := 0
 	for i := len(d) - 1; i >= 0; i-- {
 		x := d[i].(map[string]interface{})
 		value, _ := strconv.Atoi(x["value"].(string))
 		clock, _ := strconv.Atoi(x["clock"].(string))
-		r[i] = historyData{value: value, clock: clock}
+		r[j] = historyData{value: value, clock: clock}
+		j++
 	}
 
 	return r
