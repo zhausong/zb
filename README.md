@@ -8,4 +8,5 @@ a zabbix cli dashboard
 
 ### Example Dashboard
 
+![usage](https://github.com/funkygao/zabbix-cli/blob/master/.resources/usage.png)
 ![dashboard](https://github.com/funkygao/zabbix-cli/blob/master/.resources/dashboard.png)
