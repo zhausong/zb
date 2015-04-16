@@ -4,7 +4,7 @@ a zabbix cli dashboard
 ### Usage
 
     go get github.com/funkygao/zabbix-cli
-    $GOPATH/bin/zabbix-cli -h
+    $GOPATH/bin/zabbix-cli 
 
 ### Example Dashboard
 
