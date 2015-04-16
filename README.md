@@ -1,5 +1,5 @@
 # zabbix-cli
-a zabbix cli dashboard
+a zabbix CLI dashboard
 
 ### Usage
 
