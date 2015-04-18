@@ -16,12 +16,13 @@ var (
 	itemName = "gw.accesslog.count-$1 per 5mins"
 	group    = "FFan Gateway"
 
-	cliHostId   string
-	cliGroupId  string
-	cliItemName string
+	cliHostId  string
+	cliGroupId string
 
 	user = os.Getenv("ZABBIX_USER")
 	pass = os.Getenv("ZABBIX_PASS")
+
+	favoriteItems = make(map[string]bool)
 )
 
 const (

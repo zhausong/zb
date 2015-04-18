@@ -34,7 +34,7 @@ func cliLoop() {
 func handleCliCmd(s string) bool {
 	switch {
 	case s == "help" || s == "h":
-		fmt.Println("top groups hosts items setitem stat go bye")
+		fmt.Println("top groups hosts items setitem stat add stars go bye")
 
 	case s == "q" || s == "bye" || s == "quit":
 		return false
@@ -46,6 +46,9 @@ func handleCliCmd(s string) bool {
 		// TODO show name instead of id
 		fmt.Printf("group: %s, item: %s\n",
 			group, itemName)
+
+	case s == "add":
+		favoriteItems[itemName] = true
 
 	case s == "top":
 		hosts := make(map[string]struct{})
