@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/AlekSi/zabbix"
 	"os"
+	u "os/user"
 )
 
 func must(err error) {
@@ -38,6 +39,10 @@ func init() {
 	fmt.Printf("auth: %s\n", auth)
 
 	cliGroupId = GroupId(group)
+
+	currentUser, _ := u.Current()
+	favoriteFileName = currentUser.HomeDir + "/.zb"
+	loadFavorites()
 }
 
 func main() {

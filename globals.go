@@ -22,7 +22,8 @@ var (
 	user = os.Getenv("ZABBIX_USER")
 	pass = os.Getenv("ZABBIX_PASS")
 
-	favoriteItems = make(map[string]bool)
+	favoriteItems    = make(map[string]bool)
+	favoriteFileName string
 )
 
 const (

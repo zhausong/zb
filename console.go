@@ -34,7 +34,7 @@ func cliLoop() {
 func handleCliCmd(s string) bool {
 	switch {
 	case s == "help" || s == "h":
-		fmt.Println("top groups hosts items setitem stat add stars go bye")
+		fmt.Println("top groups hosts items setitem stat addfavorite favorites go bye")
 
 	case s == "q" || s == "bye" || s == "quit":
 		return false
@@ -47,8 +47,13 @@ func handleCliCmd(s string) bool {
 		fmt.Printf("group: %s, item: %s\n",
 			group, itemName)
 
-	case s == "add":
-		favoriteItems[itemName] = true
+	case s == "add" || s == "af":
+		addFavorite(itemName)
+
+	case s == "favorites" || s == "f":
+		for f, _ := range favoriteItems {
+			fmt.Println(f)
+		}
 
 	case s == "top":
 		hosts := make(map[string]struct{})
