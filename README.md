@@ -1,13 +1,13 @@
-# zabbix-cli
+# zb
 a zabbix CLI dashboard
 
 ### Usage
 
-    go get github.com/funkygao/zabbix-cli
+    go get github.com/funkygao/zb
 
     export ZABBIX_USER='xxx'
     export ZABBIX_PASS='yyy'
-    $GOPATH/bin/zabbix-cli 
+    $GOPATH/bin/zb
 
 ### Example Dashboard
 
