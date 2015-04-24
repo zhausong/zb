@@ -45,6 +45,28 @@ func init() {
 	loadFavorites()
 }
 
+func showHostsOfGroup(name string) {
+	groupMapping := map[string]string{
+		"java": "",
+		"gw":   "",
+	}
+
+	if groupName, present := groupMapping[name]; present {
+		hosts := HostsOfGroup(groupName)
+		for _, host := range hosts {
+			fmt.Printf("%s %s\n", host.Name, host.Host)
+		}
+	} else {
+		fmt.Printf("unknown group: %s\n", os.Args[1])
+	}
+}
+
 func main() {
-	cliLoop()
+	if len(os.Args) > 1 {
+		cliLoop()
+	}
+
+	// not interactive mode, just query host ip in a group
+	showHostsOfGroup(os.Args[1])
+
 }
