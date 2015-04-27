@@ -2,9 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/AlekSi/zabbix"
 	"os"
-	u "os/user"
 )
 
 func must(err error) {
@@ -33,40 +31,55 @@ func init() {
 		os.Exit(0)
 	}
 
-	api = zabbix.NewAPI(apiUrl)
-	auth, err := api.Login(user, pass)
-	must(err)
-	fmt.Printf("auth: %s\n", auth)
-
-	cliGroupId = GroupId(group)
-
-	currentUser, _ := u.Current()
-	favoriteFileName = currentUser.HomeDir + "/.zb"
-	loadFavorites()
 }
 
-func showHostsOfGroup(name string) {
+func showHostsOfGroup(names []string) {
 	groupMapping := map[string]string{
-		"java": "",
-		"gw":   "",
+		"lvs":  "FFan LVS",
+		"ngix": "FFan Nginx",
+		"gw":   "FFan Gateway",
+
+		"java1": "FFan Java1",
+		"java2": "FFan Java2",
+		"java3": "FFan Java3",
+
+		"php1": "FFan PHP1",
+		"php2": "FFan PHP2",
+		"php3": "FFan PHP3",
+
+		"kafka": "FFan Kafka",
+		"tfs":   "FFan TFS",
+		"solr":  "FFan Solr",
+		"mc":    "FFan Memcache",
+		"redis": "第三方中间件-redis",
 	}
 
-	if groupName, present := groupMapping[name]; present {
-		hosts := HostsOfGroup(groupName)
-		for _, host := range hosts {
-			fmt.Printf("%s %s\n", host.Name, host.Host)
+	for _, name := range names {
+		if groupName, present := groupMapping[name]; present {
+			initZabbix()
+			hosts := HostsOfGroup(groupName)
+			for _, host := range hosts {
+				fmt.Printf("%8s: %s\n", name, host.Name)
+			}
+		} else {
+			fmt.Printf("unknown group: %s\nvalid groups:", name)
+			for k, _ := range groupMapping {
+				fmt.Printf(" %s", k)
+			}
+			fmt.Println()
+
 		}
-	} else {
-		fmt.Printf("unknown group: %s\n", os.Args[1])
 	}
+
 }
 
 func main() {
-	if len(os.Args) > 1 {
+	if len(os.Args) <= 1 {
 		cliLoop()
+		return
 	}
 
 	// not interactive mode, just query host ip in a group
-	showHostsOfGroup(os.Args[1])
+	showHostsOfGroup(os.Args[1:])
 
 }

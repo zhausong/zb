@@ -4,10 +4,30 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	u "os/user"
 	"strings"
+
+	"github.com/AlekSi/zabbix"
 )
 
+func initZabbix() string {
+	api = zabbix.NewAPI(apiUrl)
+	auth, err := api.Login(user, pass)
+	must(err)
+	return auth
+}
+
 func cliLoop() {
+	fmt.Printf("auth: %s\n", initZabbix())
+
+	cliGroupId = GroupId(group)
+
+	currentUser, err := u.Current()
+	if err == nil {
+		favoriteFileName = currentUser.HomeDir + "/.zb"
+		loadFavorites()
+	}
+
 	fmt.Println("zabbix> Press 'h' for help")
 	reader := bufio.NewReader(os.Stdin)
 	for {
