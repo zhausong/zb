@@ -54,9 +54,19 @@ func showHostsOfGroup(names []string) {
 		"redis": "第三方中间件-redis",
 	}
 
+	initZabbix()
 	for _, name := range names {
-		if groupName, present := groupMapping[name]; present {
-			initZabbix()
+		if name == "all" {
+			for n, groupName := range groupMapping {
+				fmt.Println(n)
+
+				hosts := HostsOfGroup(groupName)
+				for _, host := range hosts {
+					fmt.Printf("%8s: %s\n", name, host.Name)
+				}
+			}
+
+		} else if groupName, present := groupMapping[name]; present {
 			hosts := HostsOfGroup(groupName)
 			for _, host := range hosts {
 				fmt.Printf("%8s: %s\n", name, host.Name)
